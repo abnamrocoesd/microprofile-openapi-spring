@@ -22,8 +22,8 @@ public class OpenApiConfig {
     public OpenApiDocument openApiDocument() throws IOException {
         Indexer indexer = new Indexer();
         listMatchingClasses("classpath*:com/abnamro/**", indexer);
-
         Index index = indexer.complete();
+
         SpringConfig springConfig = new SpringConfig();
 
         OpenApiAnnotationScanner openApiAnnotationScanner = new OpenApiAnnotationScanner(springConfig, index);
