@@ -4,6 +4,7 @@ import io.smallrye.openapi.api.OpenApiDocument;
 import io.smallrye.openapi.runtime.scanner.OpenApiAnnotationScanner;
 import org.eclipse.microprofile.openapi.models.OpenAPI;
 import org.jboss.jandex.*;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
@@ -16,15 +17,19 @@ import java.util.List;
 
 @Configuration
 @ComponentScan(value = "com.abnamro.coesd.springboot.openapi")
-public class OpenApiConfig {
+public class OpenApiDocumentProvider {
+
+    @Autowired
+    SpringConfig springConfig;
+
+    @Autowired
+    OpenAPIConfig openAPIConfig;
 
     @Bean
     public OpenApiDocument openApiDocument() throws IOException {
         Indexer indexer = new Indexer();
         listMatchingClasses("classpath*:com/abnamro/**", indexer);
         Index index = indexer.complete();
-
-        SpringConfig springConfig = new SpringConfig();
 
         OpenApiAnnotationScanner openApiAnnotationScanner = new OpenApiAnnotationScanner(springConfig, index);
         OpenAPI openAPI = openApiAnnotationScanner.scan();
