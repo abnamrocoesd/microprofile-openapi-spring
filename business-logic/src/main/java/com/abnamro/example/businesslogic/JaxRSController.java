@@ -1,4 +1,4 @@
-package com.abnamro.coesd.businesslogic;
+package com.abnamro.example.businesslogic;
 
 import org.eclipse.microprofile.openapi.annotations.OpenAPIDefinition;
 import org.eclipse.microprofile.openapi.annotations.enums.ParameterIn;
@@ -10,7 +10,7 @@ import javax.ws.rs.GET;
 import javax.ws.rs.HeaderParam;
 import javax.ws.rs.Path;
 
-@Path("/test")
+@Path("/jaxrs")
 public interface JaxRSController {
 
     @GET

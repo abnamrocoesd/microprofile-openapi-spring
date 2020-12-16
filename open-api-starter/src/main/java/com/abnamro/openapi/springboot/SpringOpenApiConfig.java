@@ -1,14 +1,13 @@
-package com.abnamro.coesd.springboot.openapi;
+package com.abnamro.openapi.springboot;
 
 import io.smallrye.openapi.api.OpenApiConfig;
 
-import java.util.Map;
+import java.util.Collections;
 import java.util.Set;
 import java.util.regex.Pattern;
 
 import org.eclipse.microprofile.openapi.OASConfig;
 
-import io.smallrye.openapi.api.OpenApiConfig;
 import io.smallrye.openapi.api.constants.OpenApiConstants;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Configuration;
@@ -19,8 +18,7 @@ import org.springframework.core.env.Environment;
  * Implementation of the {@link OpenApiConfig} interface that gets config information from Spring
  */
 @Configuration
-@Deprecated
-public class SpringConfig implements OpenApiConfig {
+public class SpringOpenApiConfig implements OpenApiConfig {
 
     @Autowired
     Environment env;
@@ -37,12 +35,13 @@ public class SpringConfig implements OpenApiConfig {
 
     @Override
     public boolean scanDisable() {
-        return Boolean.valueOf(env.getProperty(OASConfig.FILTER, "false"));
+        return Boolean.valueOf(env.getProperty(OASConfig.FILTER, "true"));
     }
 
     @Override
     public Pattern scanPackages() {
-        return patternOf(env.getProperty(OASConfig.SCAN_PACKAGES));
+        String packages = env.getProperty(OASConfig.SCAN_PACKAGES);
+        return patternOf(packages, Collections.singleton("com.abnamro"));
     }
 
     @Override
@@ -80,6 +79,7 @@ public class SpringConfig implements OpenApiConfig {
         return Boolean.valueOf(env.getProperty(OpenApiConstants.SMALLRYE_SCAN_DEPENDENCIES_DISABLE, "false"));
     }
 
+    //SmallRye specific settings
     @Override
     public Set<String> scanDependenciesJars() {
         return asCsvSet(env.getProperty(OpenApiConstants.SMALLRYE_SCAN_DEPENDENCIES_JARS));

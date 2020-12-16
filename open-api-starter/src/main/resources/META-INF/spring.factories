@@ -1,1 +1,1 @@
-org.springframework.boot.autoconfigure.EnableAutoConfiguration=com.abnamro.coesd.springboot.openapi.OpenApiDocumentProvider
+org.springframework.boot.autoconfigure.EnableAutoConfiguration=com.abnamro.openapi.springboot.OpenApiDocumentProvider
